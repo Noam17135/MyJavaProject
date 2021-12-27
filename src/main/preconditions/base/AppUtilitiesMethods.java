@@ -189,15 +189,6 @@ public class AppUtilitiesMethods extends Base {
     }
 
 
-    public void dragNDrop(WebElement element, WebElement webElement) throws InterruptedException {
-        Actions actions = new Actions(driver);
-        actions.clickAndHold(element);
-        actions.moveToElement(webElement);
-        actions.release().build();
-        actions.perform();
-
-
-    }
 
 //    public void forList(List<WebElement> elementList, String name1, String name2){
 //        elementList.parallelStream().forEach(element ->
@@ -215,8 +206,9 @@ public class AppUtilitiesMethods extends Base {
 //
 //    }
 
-    //traceElement is provided option to read the method information like (method name, line, class name)
-    //its used by the object StackTraceElement
+    /**
+     * traceElement is provided option to read the method information like (method name, line, class name),
+    it's used by the object StackTraceElement**/
     public void methodName(){
 
         StackTraceElement traceElement = Thread.currentThread().getStackTrace()[5];
