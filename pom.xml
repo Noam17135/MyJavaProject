@@ -17,17 +17,11 @@
 
 
 
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>4.0.0</version>
-        </dependency>
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.seleniumhq.selenium</groupId>-->
-        <!--            <artifactId>selenium-java</artifactId>-->
-        <!--            <version>3.141.59</version>-->
-        <!--        </dependency>-->
+                <dependency>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>selenium-java</artifactId>
+                    <version>4.0.0</version>
+                </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -133,7 +127,6 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>RELEASE</version>
-            <scope>compile</scope>
         </dependency>
 
 

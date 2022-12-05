@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class WinAppDriver {
 
-    //JsonToWebElementConverter(RemoteWebDriver driver)
+
     public WinAppDriver(WebDriver driver){
 
             PageFactory.initElements(new AppiumFieldDecorator(driver),15);

@@ -6,28 +6,22 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WindowType;
-import org.springframework.beans.factory.BeanCreationException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import pages.web.involve.LogInPage;
 
 import java.util.List;
 
-//@Deprecated
 //@SpringBootTest
 //@ContextConfiguration(classes = LogInPage.class)
 public class LogInTests extends AppUtilitiesMethods {
 
 
     @Test
-    public void test1(){
-        appUtilitiesMethods.rollLogIn(sharedObjectUtilities.logInPage.upgradeBtn);
+    public void test1() {
+        appUtilitiesMethods.sendKey(sharedObjectUtilities.logInPage.emailFiled, "aaalkrgjlkgjlk");
 
     }
 
     @Test
-    public void upLoad()  {
+    public void upLoad() {
         appUtilitiesMethods.rollLogIn(sharedObjectUtilities.logInPage.upgradeBtn);
 
         appUtilitiesMethods.click(sharedObjectUtilities.mainPage.integrationBtn);
@@ -58,12 +52,12 @@ public class LogInTests extends AppUtilitiesMethods {
         else System.out.println("The element is a problem");
 
 
-//        appUtilitiesMethods.click(sharedObjectUtilities.newTabPage.firstChoose);
-//        appUtilitiesMethods.click(sharedObjectUtilities.newTabPage.secondChoose);
-//        if (sharedObjectUtilities.newTabPage.continueBtn.isEnabled())
-//            appUtilitiesMethods.click(sharedObjectUtilities.newTabPage.continueBtn);
-//        else if (!sharedObjectUtilities.newTabPage.continueBtn.isEnabled())
-//            System.out.println("You have to choose 2 Options Above");
+        appUtilitiesMethods.click(sharedObjectUtilities.newTabPage.firstChoose);
+        appUtilitiesMethods.click(sharedObjectUtilities.newTabPage.secondChoose);
+        if (sharedObjectUtilities.newTabPage.continueBtn.isEnabled())
+            appUtilitiesMethods.click(sharedObjectUtilities.newTabPage.continueBtn);
+        else if (!sharedObjectUtilities.newTabPage.continueBtn.isEnabled())
+            System.out.println("You have to choose 2 Options Above");
 
 
     }
@@ -137,8 +131,6 @@ public class LogInTests extends AppUtilitiesMethods {
 
         appUtilitiesMethods.click(sharedObjectUtilities.templatesPage.clickToStart);
         waitFor(5000);
-
-        dragNDrop(sharedObjectUtilities.templatesPage.tempToDrag, sharedObjectUtilities.templatesPage.mainDrop);
 
 
     }

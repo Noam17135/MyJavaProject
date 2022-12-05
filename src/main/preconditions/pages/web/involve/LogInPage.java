@@ -4,21 +4,13 @@ import driver.PassDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.springframework.stereotype.Component;
 
 
 public class LogInPage extends PassDriver {
 
 
-
-
-    public void test() {
-        System.out.println("hello world");
-    }
-
-    @FindBy(name = "email")
+    @FindBy(xpath = "//input[@name='email']")
     public WebElement emailFiled;
-
 
     @FindBy(name = "password")
     public WebElement passFiled;

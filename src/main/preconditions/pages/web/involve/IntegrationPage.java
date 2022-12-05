@@ -20,4 +20,5 @@ public class IntegrationPage extends PassDriver {
 
     @FindBy(css = ".ytp-impression-link")
     public List<WebElement> youTubeOp;
+
 }

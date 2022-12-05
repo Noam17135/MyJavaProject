@@ -13,18 +13,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 
-import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.Set;
 
 
 @SuppressWarnings("rawtypes")
 @Slf4j
-//@Deprecated
+
 public abstract class Base {
 
 
@@ -35,16 +32,13 @@ public abstract class Base {
     public static WebDriver driver;
 
 
-
-
     public static AppUtilitiesMethods appUtilitiesMethods;
     public static SharedObjectUtilities sharedObjectUtilities;
-
-    public WebDriverWait wait;
+    public static WebDriverWait wait;
 
 
     @SuppressWarnings("rawtypes")
-    public static void UpDriverNUrl(DriverOptions driverOptions)  {
+    public static void UpDriverNUrl(DriverOptions driverOptions) {
         switch (driverOptions) {
             case WEB:
                 try {
@@ -55,8 +49,9 @@ public abstract class Base {
                     System.out.println("Page is - " + page + "&&" + page1);
                     driver.navigate().to("https://app.involve.me/login/?_ga=2.228173661.1727425457.1635247238-136723805.1635247238");
                     driver.manage().window().maximize();
+                    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
                     System.out.println("Page Factory = " + page);
-                    } catch (Exception e) {
+                } catch (Exception e) {
                     System.out.print("the Web CASE message is: " + e.getMessage());
                 }
                 break;
@@ -94,7 +89,7 @@ public abstract class Base {
                 break;
             case WINAPP_DRIVER:
 
-                //  Runtime.getRuntime().exec("");
+
                 DesiredCapabilities capabilities2 = new DesiredCapabilities();
                 try {
                     capabilities2.setCapability("deviceName", "WindowsPC");
@@ -114,23 +109,15 @@ public abstract class Base {
 
 
     @BeforeAll
-    public static void InitAppDriver()   {
-        //     UpDriverNUrl(DriverOptions.WINAPP_DRIVER);
-        // UpDriverNUrl(DriverOptions.MOBILE_ANDROID);
+    public static void InitAppDriver() {
         UpDriverNUrl(DriverOptions.WEB);
-
-
         sharedObjectUtilities = new SharedObjectUtilities(driver);
         appUtilitiesMethods = new AppUtilitiesMethods();
-
-
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
     @AfterAll
     public static void endProccess() {
-        //driver.quit();
-        //winappdriver.quit();
-        //    driverAN.quit();
-
+        driver.quit();
     }
 }
