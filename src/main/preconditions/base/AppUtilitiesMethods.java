@@ -3,12 +3,11 @@ package base;
 import config.DBObject;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.ui.context.Theme;
 
 import java.sql.*;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -24,8 +23,8 @@ public class AppUtilitiesMethods extends Base {
     public void click(WebElement element) {
         methodName();
         try {
-            wait = new WebDriverWait(driver, 3);
-            wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+            WebElement el = wait.until(ExpectedConditions.elementToBeClickable(element));
+            el.click();
         } catch (Exception e) {
             fail("the error is: " + e.getMessage());
         }
@@ -36,7 +35,7 @@ public class AppUtilitiesMethods extends Base {
     public void connectToDB_UserNPass() {
         methodName();
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Nmr123456@@!");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "");
             Statement statement = connection.createStatement();
             String sqlQuery = "select * from users";
             ResultSet st = statement.executeQuery(sqlQuery);
@@ -97,10 +96,12 @@ public class AppUtilitiesMethods extends Base {
 
         try {
             if (isElementPresented(element)) {
-                element.sendKeys(name);
+                click(element);
+                WebElement element1 = wait.until(ExpectedConditions.visibilityOf(element));
+                element1.sendKeys(name);
                 logInfo(Logs.PASS, "The element is set");
             } else {
-                System.out.println("The send key could not work");
+                System.out.println("The send key is not not working");
                 logInfo(Logs.WARNING, "");
             }
         } catch (ElementClickInterceptedException e) {
@@ -114,7 +115,7 @@ public class AppUtilitiesMethods extends Base {
 
     public void waitFor(int timeSet) {
         try {
-            Thread.sleep(timeSet);
+            wait.wait(timeSet);
         } catch (Exception e) {
             System.out.println("The time set exception is: " + e.getMessage());
         }
@@ -171,7 +172,7 @@ public class AppUtilitiesMethods extends Base {
 
     public void getFirstTabInARaw() {
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        appUtilitiesMethods.waitFor(5000);
+        waitFor(5000);
         driver.switchTo().window(tabs.get(1));
     }
 
@@ -187,7 +188,6 @@ public class AppUtilitiesMethods extends Base {
             }
         }
     }
-
 
 
 //    public void forList(List<WebElement> elementList, String name1, String name2){
@@ -208,11 +208,36 @@ public class AppUtilitiesMethods extends Base {
 
     /**
      * traceElement is provided option to read the method information like (method name, line, class name),
-    it's used by the object StackTraceElement**/
-    public void methodName(){
+     * it's used by the object StackTraceElement
+     **/
+    public void methodName() {
 
+//        Runtime run = Runtime.getRuntime();
         StackTraceElement traceElement = Thread.currentThread().getStackTrace()[5];
         String name = traceElement.getClassName() + " ," + traceElement.getLineNumber() + " ," + traceElement.getMethodName();
         logInfo(Logs.PASS, "The name of the Method and the Class and Line are " + " " + name);
+
+
+    }
+
+    public void loppingStream(List<WebElement> elements, String name) {
+        elements.parallelStream().
+                filter(this::isElementPresented).
+                filter(element -> element.getText().contains(name)).forEach(WebElement::click);
+    }
+
+    public void rangeLetters(WebElement element, String text) {
+        int num = 2;
+        int num1 = 8;
+
+
+        if (element.getText().length() >= num && element.getText().length() <= num1) {
+            sendKey(element, text);
+            System.out.println("Your are ok");
+        } else {
+            System.out.println("Your not");
+        }
+
+
     }
 }
