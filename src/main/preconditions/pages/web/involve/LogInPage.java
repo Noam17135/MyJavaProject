@@ -4,21 +4,23 @@ import driver.PassDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class LogInPage extends PassDriver {
 
 
-    @FindBy(xpath = "//input[@name='email']")
+
+    @FindBy(xpath = "//input[@type='email']")
     public WebElement emailFiled;
 
-    @FindBy(name = "password")
+    @FindBy( xpath= "//input[@type='password']")
     public WebElement passFiled;
 
-    @FindBy(css = "#app-layout > div.container-fluid.container-main > div > div.col-lg-4.auth-form-container > div > form > div:nth-child(5) > button > i")
+    @FindBy(xpath = "//*[@data-icon='arrow-right-to-bracket']")
     public WebElement logInBtn;
 
-    @FindBy(css = ".nav-link.upgrade.text-white.text-sm.rounded.bg-blue-500")
+    @FindBy(css= "#app > div.bg-primary-900.px-2.sm\\:px-4 > nav > div.w-full.hidden.flex-grow.md\\:flex.md\\:items-center.md\\:w-auto.space-x-2 > div.flex.items-center.md\\:flex-grow.text-sm.font-medium.space-x-1\\.5 > span > a")
     public WebElement upgradeBtn;
 
     public LogInPage(WebDriver driver) {

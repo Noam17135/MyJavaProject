@@ -35,7 +35,7 @@ public class AppUtilitiesMethods extends Base {
     public void connectToDB_UserNPass() {
         methodName();
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Nmr123456@@!");
             Statement statement = connection.createStatement();
             String sqlQuery = "select * from users";
             ResultSet st = statement.executeQuery(sqlQuery);
@@ -60,6 +60,7 @@ public class AppUtilitiesMethods extends Base {
             int o = r.nextInt(mArrayStringUsers.size());
             String y = mArrayStringUsers.get(o).getEmail();
             String w = mArrayStringUsers.get(o).getPassWord();
+            waitFor(500);
             sendKey(sharedObjectUtilities.logInPage.emailFiled, y);
             waitFor(500);
             sendKey(sharedObjectUtilities.logInPage.passFiled, w);
@@ -87,7 +88,7 @@ public class AppUtilitiesMethods extends Base {
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("The error of isElementPresented is: " + e.getMessage());
+            logInfo(Logs.FAIL,"The error of isElementPresented is: " + e.getMessage());
         }
         return false;
     }
@@ -98,15 +99,14 @@ public class AppUtilitiesMethods extends Base {
             if (isElementPresented(element)) {
                 click(element);
                 WebElement element1 = wait.until(ExpectedConditions.visibilityOf(element));
+                clearText(element1);
                 element1.sendKeys(name);
                 logInfo(Logs.PASS, "The element is set");
             } else {
-                System.out.println("The send key is not not working");
-                logInfo(Logs.WARNING, "");
+                logInfo(Logs.FAIL, "The send key is not not working");
             }
         } catch (ElementClickInterceptedException e) {
-            System.out.print("The error of sendKeys is: " + e.getMessage());
-            logInfo(Logs.FAIL, "Check the error");
+            logInfo(Logs.FAIL, "The error of sendKeys is: " + e.getMessage());
         } catch (ElementNotSelectableException e) {
             System.out.println("Other EXCEPTION: " + e.getMessage());
         }
@@ -115,7 +115,8 @@ public class AppUtilitiesMethods extends Base {
 
     public void waitFor(int timeSet) {
         try {
-            wait.wait(timeSet);
+//            wait.wait(timeSet);
+            Thread.sleep(timeSet);
         } catch (Exception e) {
             System.out.println("The time set exception is: " + e.getMessage());
         }
@@ -124,15 +125,15 @@ public class AppUtilitiesMethods extends Base {
     public void logInfo(Logs logs, String details) {
         switch (logs) {
             case PASS:
-                log.info(logs.toString() + "The action completed");
+                log.info(logs.toString() + " " + "The action completed");
                 System.out.println("Actions Success: " + details);
                 break;
             case INFO:
                 System.out.println();
             case FAIL:
-                log.debug(logs.toString() + "The action was not completed");
+                log.debug(logs.toString() + " " + "The action was not completed");
             case WARNING:
-                log.warn(logs.toString() + "Look again over the following steps");
+                log.warn(logs.toString() + " " + "Look again over the following steps");
 
 
         }
@@ -176,16 +177,25 @@ public class AppUtilitiesMethods extends Base {
         driver.switchTo().window(tabs.get(1));
     }
 
-    public void rollLogIn(WebElement element) {
-
+    public void rollLogIn(WebElement element, WebElement element1) {
+        boolean move = false;
         for (int i = 0; i < 3; i++) {
-            if (!isElementPresented(element)) {
+            if (isElementPresented(element)) {
                 connectToDB_UserNPass();
-                if (isElementPresented(element)) {
-                    logInfo(Logs.PASS, "pass");
+                if (isElementPresented(element1)) {
+                    move = true;
+                    logInfo(Logs.PASS, "/pass");
                     break;
                 }
             }
+            else {
+                System.out.println("Still not logged in");
+            }
+
+        }
+        if (!move){
+            fail("Please check the user details");
+
         }
     }
 
@@ -213,9 +223,9 @@ public class AppUtilitiesMethods extends Base {
     public void methodName() {
 
 //        Runtime run = Runtime.getRuntime();
-        StackTraceElement traceElement = Thread.currentThread().getStackTrace()[5];
-        String name = traceElement.getClassName() + " ," + traceElement.getLineNumber() + " ," + traceElement.getMethodName();
-        logInfo(Logs.PASS, "The name of the Method and the Class and Line are " + " " + name);
+            StackTraceElement traceElement = Thread.currentThread().getStackTrace()[5];
+            String name = traceElement.getClassName() + " ," + traceElement.getLineNumber() + " ," + traceElement.getMethodName();
+            logInfo(Logs.PASS, "The name of the Method and the Class and Line are " + " " + name);
 
 
     }
@@ -239,5 +249,9 @@ public class AppUtilitiesMethods extends Base {
         }
 
 
+    }
+
+    public void clearText(WebElement element){
+        element.clear();
     }
 }

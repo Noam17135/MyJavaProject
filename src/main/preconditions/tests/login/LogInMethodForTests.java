@@ -15,7 +15,7 @@ public class LogInMethodForTests extends AppUtilitiesMethods {
 
     @Description("Sanity - Log in Test")
     public void logInTest() {
-        appUtilitiesMethods.rollLogIn(sharedObjectUtilities.logInPage.upgradeBtn);
+        appUtilitiesMethods.rollLogIn(sharedObjectUtilities.logInPage.logInBtn, sharedObjectUtilities.logInPage.upgradeBtn);
 
 
     }

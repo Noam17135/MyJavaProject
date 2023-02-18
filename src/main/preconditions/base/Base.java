@@ -7,12 +7,13 @@ import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.windows.WindowsDriver;
 import io.appium.java_client.windows.WindowsElement;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
+//import java.awt.Dimension;
+import org.openqa.selenium.Dimension;
 
 import java.net.URL;
 import java.time.Duration;
@@ -30,11 +31,13 @@ public abstract class Base {
     public static IOSDriver driverIOS;
     public static AndroidDriver driverAN = null;
     public static WebDriver driver;
-
+    public static Dimension dinmesion;
 
     public static AppUtilitiesMethods appUtilitiesMethods;
     public static SharedObjectUtilities sharedObjectUtilities;
     public static WebDriverWait wait;
+
+
 
 
     @SuppressWarnings("rawtypes")
@@ -44,11 +47,13 @@ public abstract class Base {
                 try {
                     System.setProperty("webdriver.chrome.driver", "C:\\Automation\\drivers\\chromedriver.exe");
                     driver = new ChromeDriver();
+                    //dinmesion = new Dimension(300,400);
                     Set page = driver.manage().getCookies();
                     Set page1 = driver.manage().logs().getAvailableLogTypes();
                     System.out.println("Page is - " + page + "&&" + page1);
                     driver.navigate().to("https://app.involve.me/login/?_ga=2.228173661.1727425457.1635247238-136723805.1635247238");
                     driver.manage().window().maximize();
+                   // driver.manage().window().setSize(dinmesion);
                     driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
                     System.out.println("Page Factory = " + page);
                 } catch (Exception e) {
@@ -116,8 +121,8 @@ public abstract class Base {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
-    @AfterAll
-    public static void endProccess() {
-        driver.quit();
-    }
+//    @AfterAll
+//    public static void endProccess() {
+//        driver.quit();
+//    }
 }
